@@ -1,6 +1,8 @@
 <?php declare(strict_types = 1);
 namespace noxkiwi\validator\Validator\Number;
 
+use function compact;
+
 /**
  * I am
  *
