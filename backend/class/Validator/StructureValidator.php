@@ -2,7 +2,10 @@
 namespace noxkiwi\validator\Validator;
 
 use noxkiwi\validator\Validator;
+use function compact;
 use function is_array;
+use function str_contains;
+use function str_replace;
 
 /**
  * I am the arbitrary structure validator.

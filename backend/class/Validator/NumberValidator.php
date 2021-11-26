@@ -5,6 +5,8 @@ use noxkiwi\validator\Validator;
 use function compact;
 use function is_int;
 use function is_numeric;
+use function min;
+use function round;
 
 /**
  * I am

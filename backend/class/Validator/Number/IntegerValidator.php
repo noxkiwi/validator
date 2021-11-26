@@ -2,6 +2,7 @@
 namespace noxkiwi\validator\Validator\Number;
 
 use noxkiwi\validator\Validator\NumberValidator;
+use function compact;
 
 /**
  * I am

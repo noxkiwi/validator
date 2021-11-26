@@ -5,7 +5,12 @@ use Exception;
 use noxkiwi\core\Filesystem;
 use noxkiwi\core\Helper\MimeHelper;
 use noxkiwi\validator\Validator;
+use function compact;
+use function finfo_close;
+use function finfo_file;
+use function finfo_open;
 use function in_array;
+use const FILEINFO_MIME_TYPE;
 
 /**
  * I am

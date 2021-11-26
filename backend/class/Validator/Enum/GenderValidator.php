@@ -17,7 +17,6 @@ class GenderValidator extends EnumValidator
 {
     protected const ENUMERATIONS = [
         'male',
-        'female',
-        'retard'
+        'female'
     ];
 }

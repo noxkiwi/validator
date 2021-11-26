@@ -2,8 +2,11 @@
 namespace noxkiwi\validator\Validator;
 
 use noxkiwi\validator\Validator;
+use function compact;
 use function is_int;
 use function is_string;
+use function max;
+use function str_contains;
 use function strlen;
 
 /**
@@ -40,12 +43,12 @@ class TextValidator extends Validator
         /** @noinspection NotOptimalIfConditionsInspection
          * This is only to stop validation if value is (allowed to be) NULL.
          */
-            ! empty(parent::validate($value, $options))
-         || $value === null
-         || ! $this->isValidString($value)
-         || ! $this->isValidMinLength($value)
-         || ! $this->isValidMaxLength($value)
-         || ! $this->isValidCharacters($value);
+        ! empty(parent::validate($value, $options))
+        || $value === null
+        || ! $this->isValidString($value)
+        || ! $this->isValidMinLength($value)
+        || ! $this->isValidMaxLength($value)
+        || ! $this->isValidCharacters($value);
         // @formatter:on
         return $this->getErrors();
     }

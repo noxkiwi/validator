@@ -7,6 +7,8 @@ use noxkiwi\singleton\Singleton;
 use noxkiwi\validator\Constants\Type;
 use noxkiwi\validator\Interfaces\ValidatorInterface;
 use function is_bool;
+use function str_contains;
+use const E_ERROR;
 
 /**
  * I am the base validator. My purpose is to check basic values (nullable or not).

@@ -3,6 +3,7 @@ namespace noxkiwi\validator\Validator\Structure\Upload;
 
 use Exception;
 use noxkiwi\validator\Validator\Structure\UploadValidator;
+use function compact;
 
 /**
  * I am
