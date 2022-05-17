@@ -22,8 +22,8 @@ class ValidatorTest extends TestCase
      */
     public function testDefaultBehaviour(): void
     {
-        $validator = Validator::getInstance();
-        $this->assertEquals($validator->validate(null), false);
+        $validator = Validator::get();
+        $this->assertEquals(false, $validator->isValid(null));
     }
 
     /**
@@ -35,11 +35,11 @@ class ValidatorTest extends TestCase
      */
     public function testNullIsAllowed(): void
     {
-        $validator = Validator::getInstance();
+        $validator = Validator::get();
         $validator->setOptions([
                                    Validator::OPTION_NULL_ALLOWED => true
                                ]);
-        $this->assertEquals($validator->validate(null), true);
+        $this->assertEquals(true, $validator->isValid(null));
     }
 
     /**
@@ -51,10 +51,10 @@ class ValidatorTest extends TestCase
      */
     public function testNullIsNotAllowed(): void
     {
-        $validator = Validator::getInstance();
+        $validator = Validator::get();
         $validator->setOptions([
                                    Validator::OPTION_NULL_ALLOWED => false
                                ]);
-        $this->assertEquals($validator->validate(null), false);
+        $this->assertEquals(false, $validator->isValid(null));
     }
 }
