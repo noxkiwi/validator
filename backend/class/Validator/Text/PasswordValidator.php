@@ -30,10 +30,10 @@ class PasswordValidator extends TextValidator
     /**
      * @inheritDoc
      */
-    public function validate(mixed $value, ?array $options = null): array
+    public function validate(mixed $value): array
     {
         // @formatter:off
-            ! empty(parent::validate($value, $options))
+            ! empty(parent::validate($value))
          || ! $this->isValidUppercase($value)
          || ! $this->isValidLowercase($value)
          || ! $this->isValidSpecialChars($value)

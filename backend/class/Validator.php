@@ -16,8 +16,8 @@ use const E_ERROR;
  * @package      noxkiwi\validator
  * @author       Jan Nox <jan.nox@pm.me>
  * @license      https://nox.kiwi/license
- * @copyright    2016 - 2021 noxkiwi
- * @version      1.1.7
+ * @copyright    2016 - 2022 noxkiwi
+ * @version      1.2.8
  * @link         https://nox.kiwi/
  */
 class Validator extends Singleton implements ValidatorInterface
@@ -36,6 +36,7 @@ class Validator extends Singleton implements ValidatorInterface
     protected function __construct(array $options = null)
     {
         parent::__construct();
+        $this->setNullAllowed(false);
         $this->setOptions($options ?? []);
         $this->reset();
     }
@@ -57,29 +58,27 @@ class Validator extends Singleton implements ValidatorInterface
     }
 
     /**
-     * @inheritDoc
+     * I will annihilate any error entry in the Validator for the next value's validation.
      */
-    final public function reset(): Validator
+    final protected function reset(): void
     {
         $this->errors = [];
-
-        return $this;
     }
 
     /**
      * @inheritDoc
      */
-    final public function isValid(mixed $value, array $options = null): bool
+    final public function isValid(mixed $value): bool
     {
-        return empty($this->validate($value, $options ?? []));
+        return empty($this->validate($value));
     }
 
     /**
      * @inheritDoc
      */
-    public function validate(mixed $value, ?array $options = null): array
+    public function validate(mixed $value): array
     {
-        $this->setOptions($options ?? []);
+        $this->reset();
         if ($value === null && ! $this->isNullAllowed()) {
             $this->addError('VALUE_IS_NULL', $value);
         }
@@ -141,16 +140,14 @@ class Validator extends Singleton implements ValidatorInterface
     {
         try {
             if (empty($type)) {
-                return static::getInstance()->reset();
+                return new static();
             }
             if (! str_contains($type, '\\')) {
                 $type = self::getFromDictionary($type);
             }
-            /** @var \noxkiwi\validator\Validator $type */
-            $inst = $type::getInstance();
-            $inst->reset();
 
-            return $inst;
+            /** @var \noxkiwi\validator\Validator $type */
+            return $type::getInstance();
         } catch (Exception) {
             throw new InvalidArgumentException("Validator $type was not found.", E_ERROR);
         }

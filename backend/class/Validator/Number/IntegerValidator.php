@@ -19,9 +19,12 @@ class IntegerValidator extends NumberValidator
     /**
      * @inheritDoc
      */
-    public function validate(mixed $value, ?array $options = null): array
+    public function validate(mixed $value): array
     {
-        if (! empty(parent::validate($value, $options))) {
+        if (! empty($value)) {
+            $value = (int)$value;
+        }
+        if (! empty(parent::validate($value))) {
             return $this->getErrors();
         }
         if ($value !== (int)$value) {
