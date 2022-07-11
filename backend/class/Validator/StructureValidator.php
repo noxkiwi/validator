@@ -22,7 +22,7 @@ class StructureValidator extends Validator
     public const OPTION_STRUCTURE = 'structure';
     public const OPTION_KEYS      = 'keys';
     /** @var array Contains a list of array keys that MUST exist in the validated array */
-    protected array $arrKeys = [];
+    protected array $arrKeys;
     /**
      * I am the multi-dimensional array structure.
      * e.g. [
@@ -31,7 +31,7 @@ class StructureValidator extends Validator
      *
      * @var array
      */
-    protected array $structureDesign = [];
+    protected array $structureDesign;
 
     /**
      * StructureValidator constructor.
@@ -40,6 +40,8 @@ class StructureValidator extends Validator
      */
     protected function __construct(array $options = null)
     {
+        $this->structureDesign = [];
+        $this->arrKeys         = [];
         parent::__construct($options);
     }
 

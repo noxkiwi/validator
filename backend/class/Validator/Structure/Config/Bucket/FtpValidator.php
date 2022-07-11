@@ -21,9 +21,13 @@ class FtpValidator extends BucketValidator
     /**
      * @inheritDoc
      */
-    protected array $structureDesign = [
-        'basedir'   => TextValidator::class,
-        'public'    => BooleanValidator::class,
-        'ftpserver' => FtpServerValidator::class
-    ];
+    protected function __construct(array $options = null)
+    {
+        parent::__construct($options);
+        $this->structureDesign = [
+            'basedir'   => TextValidator::class,
+            'public'    => BooleanValidator::class,
+            'ftpserver' => FtpServerValidator::class
+        ];
+    }
 }

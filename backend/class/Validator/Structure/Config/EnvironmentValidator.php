@@ -19,10 +19,14 @@ class EnvironmentValidator extends ConfigValidator
     /**
      * @inheritDoc
      */
-    protected array $structureDesign = [
-        'database'   => StructureValidator::class,
-        'mail'       => StructureValidator::class,
-        'cache'      => StructureValidator::class,
-        'Filesystem' => StructureValidator::class
-    ];
+    protected function __construct(array $options = null)
+    {
+        parent::__construct($options);
+        $this->structureDesign = [
+            'database'   => StructureValidator::class,
+            'mail'       => StructureValidator::class,
+            'cache'      => StructureValidator::class,
+            'Filesystem' => StructureValidator::class
+        ];
+    }
 }

@@ -106,7 +106,7 @@ class Validator extends Singleton implements ValidatorInterface
     }
 
     /**
-     * I will add the error to the errorstack
+     * I will add the given error.
      *
      * @param string $code
      * @param mixed  $info
