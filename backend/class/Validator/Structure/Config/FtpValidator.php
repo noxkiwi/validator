@@ -20,10 +20,14 @@ class FtpValidator extends ConfigValidator
     /**
      * @inheritDoc
      */
-    protected array $structureDesign = [
-        'host' => TextValidator::class,
-        'port' => PortValidator::class,
-        'user' => TextValidator::class,
-        'pass' => TextValidator::class
-    ];
+    protected function __construct(array $options = null)
+    {
+        parent::__construct($options);
+        $this->structureDesign = [
+            'host' => TextValidator::class,
+            'port' => PortValidator::class,
+            'user' => TextValidator::class,
+            'pass' => TextValidator::class
+        ];
+    }
 }

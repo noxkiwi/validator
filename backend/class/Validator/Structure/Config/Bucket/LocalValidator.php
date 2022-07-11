@@ -32,9 +32,9 @@ class LocalValidator extends BucketValidator
     /**
      * @inheritDoc
      */
-    public function validate(mixed $value, ?array $options = null): array
+    public function validate(mixed $value): array
     {
-        if (! empty(parent::validate($value, $options))) {
+        if (! empty(parent::validate($value))) {
             return $this->getErrors();
         }
         if (! is_bool($value['public'])) {

@@ -7,6 +7,7 @@ use function is_int;
 use function is_numeric;
 use function min;
 use function round;
+use const PHP_FLOAT_DIG;
 
 /**
  * I am
@@ -33,13 +34,13 @@ class NumberValidator extends Validator
     /**
      * @inheritDoc
      */
-    public function validate(mixed $value, ?array $options = null): array
+    public function validate(mixed $value): array
     {
-        if (! empty(parent::validate($value, $options)) || ! $this->isValidNumber($value)) {
+        if (! empty(parent::validate($value)) || ! $this->isValidNumber($value)) {
             return $this->getErrors();
         }
         $value = (float)$value;
-        $this->isValidMinimum($value) || ! $this->isValidMaximum($value) || ! $this->isValidPrecision($value);
+        $this->isValidMinimum($value) && $this->isValidMaximum($value) && $this->isValidPrecision($value);
 
         return $this->getErrors();
     }
@@ -79,7 +80,7 @@ class NumberValidator extends Validator
      */
     private function isValidMinimum($value): bool
     {
-        $minimum = $this->minValue;
+        $minimum = $this->getMinValue();
         if ($minimum !== null && $value < $minimum) {
             $this->addError('VALUE_TOO_LOW', compact('value', 'minimum'));
 
@@ -98,7 +99,7 @@ class NumberValidator extends Validator
      */
     private function isValidMaximum($value): bool
     {
-        $maximum = $this->maxValue;
+        $maximum = $this->getMaxValue();
         if ($maximum !== null && $value > $maximum) {
             $this->addError('VALUE_TOO_HIGH', compact('value', 'maximum'));
 
@@ -117,8 +118,8 @@ class NumberValidator extends Validator
      */
     private function isValidPrecision($value): bool
     {
-        $maximumDecimals = $this->maxPrecision;
-        if ($maximumDecimals !== null && round($value, $maximumDecimals) !== (float)$value) {
+        $maximumDecimals = $this->getMaxPrecision();
+        if (round($value, $maximumDecimals) !== (float)$value) {
             $this->addError('VALUE_TOO_PRECISE', compact('value', 'maximumDecimals'));
 
             return true;
@@ -133,17 +134,17 @@ class NumberValidator extends Validator
     public function setOptions(array $options): Validator
     {
         parent::setOptions($options);
-        $this->minValue     = null;
-        $this->maxValue     = null;
-        $this->maxPrecision = 13;
+        $this->setMinValue(null);
         if (is_numeric($options[static::OPTION_MIN_VALUE] ?? null)) {
-            $this->minValue = (float)$options[static::OPTION_MIN_VALUE];
+            $this->setMinValue((float)$options[static::OPTION_MIN_VALUE]);
         }
+        $this->setMaxValue(null);
         if (is_numeric($options[static::OPTION_MAX_VALUE] ?? null)) {
-            $this->maxValue = (float)$options[static::OPTION_MAX_VALUE];
+            $this->setMaxValue((float)$options[static::OPTION_MAX_VALUE]);
         }
+        $this->setMaxPrecision(PHP_FLOAT_DIG);
         if (is_int($options[static::OPTION_MAX_PRECISION] ?? null)) {
-            $this->maxPrecision = $options[static::OPTION_MAX_PRECISION];
+            $this->setMaxPrecision($options[static::OPTION_MAX_PRECISION]);
         }
 
         return $this;
@@ -151,15 +152,59 @@ class NumberValidator extends Validator
 
     /**
      * I will set the maximum allowed count of digits for the number.
+     * Of course, this must not exceed the PHP_FLOAT_DIG constant.
      *
      * @param int $precision
-     *
-     * @return \noxkiwi\validator\Validator
      */
-    protected function setMaxPrecision(int $precision): Validator
+    final public function setMaxPrecision(int $precision): void
     {
-        $this->maxPrecision = min(0, $precision);
+        $this->maxPrecision = min(PHP_FLOAT_DIG, max(0, $precision));
+    }
 
-        return $this;
+    /**
+     * I will solely set the minimum value for validation.
+     *
+     * @param float|null $minValue
+     */
+    final public function setMinValue(?float $minValue): void
+    {
+        $this->minValue = $minValue;
+    }
+
+    /**
+     * I will solely set the maximum value for validation.
+     *
+     * @param float|null $maxValue
+     */
+    final public function setMaxValue(?float $maxValue): void
+    {
+        $this->maxValue = $maxValue;
+    }
+
+    /**
+     * I will solely return the maximum value for validation.
+     * @return float|null
+     */
+    public function getMaxValue(): ?float
+    {
+        return $this->maxValue ?? null;
+    }
+
+    /**
+     * I will solely return the minimum value for validation.
+     * @return float|null
+     */
+    public function getMinValue(): ?float
+    {
+        return $this->minValue ?? null;
+    }
+
+    /**
+     * I will solely return the max amount of decimals for validation.
+     * @return int
+     */
+    public function getMaxPrecision(): int
+    {
+        return $this->maxPrecision ?? PHP_FLOAT_DIG;
     }
 }

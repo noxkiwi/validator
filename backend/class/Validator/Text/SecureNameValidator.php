@@ -20,13 +20,13 @@ class SecureNameValidator extends TextValidator
      */
     protected function __construct(array $options = [])
     {
+        parent::__construct($options);
         $this->setOptions(
             [
-                static::OPTION_MINLENGTH     => 3,
+                static::OPTION_MINLENGTH     => 1,
                 static::OPTION_MAXLENGTH     => 32,
                 static::OPTION_CHARS_ALLOWED => 'abcdefghijklmnopqrstuvwxyz'
             ]
         );
-        parent::__construct($options);
     }
 }

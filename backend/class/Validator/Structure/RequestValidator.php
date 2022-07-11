@@ -20,8 +20,12 @@ class RequestValidator extends StructureValidator
     /**
      * @inheritDoc
      */
-    protected array $structureDesign = [
-        Mvc::CONTEXT => SecureNameValidator::class,
-        Mvc::VIEW    => SecureNameValidator::class
-    ];
+    protected function __construct(array $options = null)
+    {
+        parent::__construct($options);
+        $this->structureDesign = [
+            Mvc::CONTEXT => SecureNameValidator::class,
+            Mvc::VIEW    => SecureNameValidator::class
+        ];
+    }
 }

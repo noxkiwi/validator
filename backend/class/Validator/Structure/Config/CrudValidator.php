@@ -20,9 +20,13 @@ class CrudValidator extends ConfigValidator
     /**
      * @inheritDoc
      */
-    protected array $structureDesign = [
-        'pagination'    => PaginationValidator::class,
-        'visibleFields' => StructureValidator::class,
-        'order'         => StructureValidator::class
-    ];
+    protected function __construct(array $options = null)
+    {
+        parent::__construct($options);
+        $this->structureDesign = [
+            'pagination'    => PaginationValidator::class,
+            'visibleFields' => StructureValidator::class,
+            'order'         => StructureValidator::class
+        ];
+    }
 }

@@ -20,5 +20,9 @@ class ContextValidator extends ConfigValidator
     /**
      * @inheritDoc
      */
-    protected array $structureDesign = ['defaultview' => SecureNameValidator::class, Mvc::VIEW => null];
+    protected function __construct(array $options = null)
+    {
+        parent::__construct($options);
+        $this->structureDesign = ['defaultview' => SecureNameValidator::class, Mvc::VIEW => null];
+    }
 }

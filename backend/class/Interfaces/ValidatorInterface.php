@@ -1,8 +1,6 @@
 <?php declare(strict_types = 1);
 namespace noxkiwi\validator\Interfaces;
 
-use noxkiwi\validator\Validator;
-
 /**
  * I am the interface for all Validator classes.
  *
@@ -20,12 +18,11 @@ interface ValidatorInterface
      * If the value is valid, the array will be empty.
      * If you provide an array of $options, these will be used for the validation.
      *
-     * @param mixed      $value
-     * @param array|null $options
+     * @param mixed $value
      *
      * @return       array
      */
-    public function validate(mixed $value, ?array $options = null): array;
+    public function validate(mixed $value): array;
 
     /**
      * Sends the $value to the validate function and returns true, if the array of errors is empty.
@@ -42,12 +39,5 @@ interface ValidatorInterface
      * @return       array
      */
     public function getErrors(): array;
-
-    /**
-     * I will remove any error from the Errorstack instance.
-     *
-     * @return       \noxkiwi\validator\Validator
-     */
-    public function reset(): Validator;
 }
 

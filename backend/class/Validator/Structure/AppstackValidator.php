@@ -18,9 +18,9 @@ class AppstackValidator extends StructureValidator
     /**
      * @inheritDoc
      */
-    public function validate(mixed $value, ?array $options = null): array
+    public function validate(mixed $value): array
     {
-        if (! empty(parent::validate($value, $options))) {
+        if (! empty(parent::validate($value))) {
             return $this->getErrors();
         }
         if (empty($value)) {

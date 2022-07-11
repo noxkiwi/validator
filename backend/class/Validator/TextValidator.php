@@ -37,13 +37,13 @@ class TextValidator extends Validator
     /**
      * @inheritDoc
      */
-    public function validate($value, ?array $options = []): array
+    public function validate($value): array
     {
         // @formatter:off
         /** @noinspection NotOptimalIfConditionsInspection
          * This is only to stop validation if value is (allowed to be) NULL.
          */
-        ! empty(parent::validate($value, $options))
+        ! empty(parent::validate($value))
         || $value === null
         || ! $this->isValidString($value)
         || ! $this->isValidMinLength($value)
@@ -222,21 +222,21 @@ class TextValidator extends Validator
      */
     public function setOptions(array $options): Validator
     {
-        $this->setMinLength(0);
-        $this->setMaxLength(0);
-        $this->setAllowedChars('');
-        $this->setForbiddenChars('');
         parent::setOptions($options);
-        if (! empty($options[static::OPTION_MINLENGTH]) && is_int($options[static::OPTION_MINLENGTH])) {
+        $this->setMinLength(0);
+        if (is_int($options[static::OPTION_MINLENGTH] ?? null)) {
             $this->setMinLength($options[static::OPTION_MINLENGTH]);
         }
-        if (! empty($options[static::OPTION_MAXLENGTH]) && is_int($options[static::OPTION_MAXLENGTH])) {
+        $this->setMaxLength(0);
+        if (is_int($options[static::OPTION_MAXLENGTH] ?? null)) {
             $this->setMaxLength($options[static::OPTION_MAXLENGTH]);
         }
-        if (! empty($options[static::OPTION_CHARS_ALLOWED]) && is_string($options[static::OPTION_CHARS_ALLOWED])) {
+        $this->setAllowedChars('');
+        if (is_string($options[static::OPTION_CHARS_ALLOWED] ?? null)) {
             $this->setAllowedChars($options[static::OPTION_CHARS_ALLOWED]);
         }
-        if (! empty($options[static::OPTION_CHARS_FORBIDDEN]) && is_string($options[static::OPTION_CHARS_FORBIDDEN])) {
+        $this->setForbiddenChars('');
+        if (is_string($options[static::OPTION_CHARS_FORBIDDEN] ?? null)) {
             $this->setForbiddenChars($options[static::OPTION_CHARS_FORBIDDEN]);
         }
 

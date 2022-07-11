@@ -33,14 +33,6 @@ class EmailValidator extends TextValidator
      */
     protected function __construct(array $options = [])
     {
-        $this->validateDns = true;
-        $this->setOptions(
-            [
-                static::OPTION_MINLENGTH       => 8,
-                static::OPTION_MAXLENGTH       => 64,
-                static::OPTION_CHARS_FORBIDDEN => ' *$+'
-            ]
-        );
         try {
             $this->forbiddenHosts = (array)Environment::getInstance()->get('validator>email>blockedDomains', []);
         } catch (Exception) {
@@ -56,8 +48,8 @@ class EmailValidator extends TextValidator
     public function setOptions(array $options): Validator
     {
         parent::setOptions($options);
-        if (isset($options[static::OPTION_VALIDATE_DNS]) && is_bool($options[static::OPTION_VALIDATE_DNS])) {
-            $this->setValidateDns($options[static::OPTION_VALIDATE_DNS]);
+        if (is_bool($options[static::OPTION_VALIDATE_DNS] ?? null)) {
+            $this->setDnsRequired($options[static::OPTION_VALIDATE_DNS]);
         }
 
         return $this;
@@ -70,7 +62,7 @@ class EmailValidator extends TextValidator
      *
      * @return \noxkiwi\validator\Validator
      */
-    final public function setValidateDns(bool $validateDns): Validator
+    final public function setDnsRequired(bool $validateDns): Validator
     {
         $this->validateDns = $validateDns;
 
@@ -80,9 +72,9 @@ class EmailValidator extends TextValidator
     /**
      * @inheritDoc
      */
-    public function validate(mixed $value, ?array $options = null): array
+    public function validate(mixed $value): array
     {
-        if (! empty(parent::validate($value, $options))) {
+        if (! empty(parent::validate($value))) {
             return $this->getErrors();
         }
         if (empty($value)) {
