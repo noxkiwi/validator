@@ -17,7 +17,7 @@ function createUser(array $request): void {
 }
 ```
 
-# Validator 💘 Value
+# [Validator](https://validator.nox.kiwi) 💘 [Value](https://value.nox.kiwi)
 ### Validator
 - Checks input for integrity.
 - Returns one or more detailed pieces of information on why an input is problematic.
