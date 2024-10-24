@@ -1,4 +1,9 @@
 # Validator - Providing Data Analysis Across Your Project
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=noxkiwi_validator&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=noxkiwi_validator)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=noxkiwi_validator&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=noxkiwi_validator)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=noxkiwi_validator&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=noxkiwi_validator)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=noxkiwi_validator&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=noxkiwi_validator)
+
 ## It Began With a Mistake
 
 In 2016, during the hectic initial phase of our startup, we made a critical mistake that impacted several months of invoice provisions for our sales managers. We mistakenly applied the netToGross tax calculation for sales tax multiple times, even on already gross values, leading to significant errors. This issue went unnoticed for several months, causing considerable trouble. As a result, we developed two separate libraries to ensure valid values across all our platforms.
